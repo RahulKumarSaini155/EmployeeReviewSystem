@@ -12,11 +12,11 @@
             <p>Please enter your information</p>
         </h3>
 
-        <form id="signup_form" action="" method="POST">
-            <input type="text" id="name" name="name" placeholder="Full Name" required>
+        <form id="signup_form" action="/users/create" method="POST">
+            <input type="text" id="name" name="name" placeholder="Name" required>
             <input type="text" id="email" name="email" placeholder="Email" required>
-            <input type="text" id="password" name="password" placeholder="Password" required>
-            <input type="text" id="confirm_password" name="confirm_password" placeholder="Confirm Password" required>
+            <input type="password" id="password" name="password" placeholder="Password" required>
+            <input type="password" id="confirm_password" name="confirm_password" placeholder="Confirm Password" required>
 
             <select id="role" name="role" required>
                 <!-- <option selected>--select role--</option> -->

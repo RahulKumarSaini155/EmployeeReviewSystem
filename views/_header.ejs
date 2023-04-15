@@ -7,13 +7,16 @@
             <h1>Employee Review System</h1>
         </li>
     </ul>
+    <% if(locals.user) { %>
     <ul id="right_list">
         <li>
             <a href="/">Home</a>
         </li>
+        <% if(locals.user.role === 'admin') {%>
         <li>
             <a href="">Add New Employee</a>
         </li>
+        <% } %>
         <li>
             <a href="/users/sign-up">Sign Up</a>
         </li>
@@ -21,10 +24,11 @@
             <a href="/users/sign-in">Sign In</a>
         </li>
         <li>
-            <a href="#">Hello UserName</a>
+            <a href="#">Hello <%= user.name %></a>
         </li>
         <li>
             <a href="/users/sign-in">Sign Out</a>
         </li>
     </ul>
+    <% } %>
 </nav>
