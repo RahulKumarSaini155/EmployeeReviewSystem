@@ -69,6 +69,13 @@
     padding: 5px 10px;
 }
 
+#role{
+    border: none;
+    outline: none;
+    border-bottom: 1px solid black;
+    padding: 5px 10px;
+}
+
 #signup_form button{
     background-color: green;
     color: white;
