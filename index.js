@@ -12,6 +12,10 @@ const passportLocal = require('./config/passport-local-strategy');
 
 const MongoStore = require('connect-mongo')(session);
 
+// use flash messages
+const flash = require('connect-flash');
+const customMwre = require('./config/middleware');
+
 app.use(express.urlencoded());
 
 // ejs engine
@@ -44,6 +48,9 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 app.use(passport.setAuthenticatedUser);
+
+app.use(flash());
+app.use(customMwre.setFlash);
 
 
 // layout

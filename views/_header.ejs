@@ -4,7 +4,7 @@
 <nav>
     <ul id="left_list">
         <li>
-            <h1>Employee Review System</h1>
+            <h2>Employee Review System</h2>
         </li>
     </ul>
     <% if(locals.user) { %>
@@ -14,20 +14,20 @@
         </li>
         <% if(locals.user.role === 'admin') {%>
         <li>
-            <a href="">Add New Employee</a>
+            <a href="/users/addEmployee">Add New Employee</a>
         </li>
         <% } %>
-        <li>
+        <!-- <li>
             <a href="/users/sign-up">Sign Up</a>
         </li>
         <li>
             <a href="/users/sign-in">Sign In</a>
-        </li>
+        </li> -->
         <li>
             <a href="#">Hello <%= user.name %></a>
         </li>
         <li>
-            <a href="/users/sign-in">Sign Out</a>
+            <a href="/users/sign-out">Sign Out</a>
         </li>
     </ul>
     <% } %>
