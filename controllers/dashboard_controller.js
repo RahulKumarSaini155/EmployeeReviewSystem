@@ -1,7 +1,7 @@
 const Review = require('../models/review');
 const User = require('../models/user');
 
-// render admin dashboard
+// admin dashboard
 module.exports.adminDashboard = async (req, res) => {
   try {
     if (req.isAuthenticated()) {
@@ -9,7 +9,7 @@ module.exports.adminDashboard = async (req, res) => {
         // populate all users
         let users = await User.find({}).populate('name');
 
-        // filter logged in user
+        // logged in user filter
         let otherUsers = users.filter((user) => user.email !== req.user.email);
 
         return res.render('admin_dashboard', {
@@ -28,7 +28,7 @@ module.exports.adminDashboard = async (req, res) => {
   }
 };
 
-// Render employee dashboard
+// employee dashboard
 module.exports.employeeDashboard = async (req, res) => {
     try {
       if (req.isAuthenticated()) {

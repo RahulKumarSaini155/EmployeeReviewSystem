@@ -75,7 +75,7 @@ module.exports.submitReview = async (req, res) => {
   }
 };
 
-// Update review
+// review update
 module.exports.updateReview = async (req, res) => {
   try {
     const { feedback } = req.body;
@@ -85,9 +85,10 @@ module.exports.updateReview = async (req, res) => {
     if (!reviewToBeUpdated) {
       req.flash('error', 'Review does not exist!');
     }
-
-    reviewToBeUpdated.review = feedback; // assigning the feedback string coming from form body to review
-    reviewToBeUpdated.save(); // saving the review
+    // assigning the feedback string coming from form body to review
+    reviewToBeUpdated.review = feedback;
+    // saving the review
+    reviewToBeUpdated.save(); 
     req.flash('success', 'Review updated !');
     return res.redirect('back');
   } catch (err) {

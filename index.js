@@ -4,6 +4,7 @@ const app = express();
 const PORT = process.env.PORT || 8000;
 const db = require('./config/mongoose');
 const expressLayout = require('express-ejs-layouts');
+const env = require('./config/environment');
 
 // used for session cookie
 const session = require('express-session');
@@ -12,7 +13,7 @@ const passportLocal = require('./config/passport-local-strategy');
 
 const MongoStore = require('connect-mongo')(session);
 
-// use flash messages
+// use flash for messages
 const flash = require('connect-flash');
 const customMwre = require('./config/middleware');
 
@@ -25,9 +26,8 @@ app.set('views', './views');
 // mongo store is used to store the session cookie in the db
 app.use(session({
     name: 'employee-review-system',
-    // Todo change the secret before deployment in production mode
-    // secret: env.session_cookie_key,
-    secret: 'ejMyY2WKMrryvBCQ8v8YGIT8x0XyA1KZ',
+    // change the secret before deployment in production mode
+    secret: env.secret,
     saveUninitialized: false,
     resave: false,
     cookie: {

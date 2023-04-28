@@ -14,6 +14,7 @@ const userSchema = new mongoose.Schema({
         type: String,
         required: true
     },
+    // designation chosen admin or employee
     role: {
         type: String,
         enum: ['employee', 'admin'],

@@ -1,11 +1,13 @@
 const User = require('../models/user');
+const Review = require('../models/review');
 
 module.exports.sign_in = (req, res) => {
     if (req.isAuthenticated()) {
         if (req.user.role === 'admin') {
+          // user is admin
           return res.redirect('/admin-dashboard');
         }
-        // if user is not admin
+        // if user is employee
         return res.redirect(`employee-dashboard/${req.user.id}`);
     }
 
@@ -17,8 +19,10 @@ module.exports.sign_in = (req, res) => {
 module.exports.sign_up = (req, res) => {
     if (req.isAuthenticated()) {
         if (req.user.role === 'admin') {
+          // user is admin
           return res.redirect('/admin-dashboard');
         }
+        // if user is employee
         return res.redirect(`employee-dashboard/${req.user.id}`);
       }
 
@@ -27,7 +31,7 @@ module.exports.sign_up = (req, res) => {
     });
 }
 
-// Render add employee page
+// add employee
 module.exports.addEmployee = (req, res) => {
   if (req.isAuthenticated()) {
     if (req.user.role === 'admin') {
@@ -39,13 +43,13 @@ module.exports.addEmployee = (req, res) => {
   return res.redirect('/');
 };
 
-// Get sign up data
+// getting sign up data
 module.exports.create = async (req, res) => {
     try {
         console.log(req.body);
       const { name, email, password, confirm_password, role } = req.body;
   
-      // if password doesn't match
+      // if password does not match
       if (password != confirm_password) {
         // req.flash('error', 'Password and Confirm password are not same');
         console.log('Enter incorrect details');
@@ -91,7 +95,8 @@ module.exports.create = async (req, res) => {
     }
 };
 
-// Render edit employee page
+
+// edit employee
 module.exports.editEmployee = async (req, res) => {
   try {
     if (req.isAuthenticated()) {
@@ -105,7 +110,6 @@ module.exports.editEmployee = async (req, res) => {
           },
         });
         
-
         // extracting reviews given by others from employee variable
         const reviewsFromOthers = employee.reviewsFromOthers;
 
@@ -123,11 +127,13 @@ module.exports.editEmployee = async (req, res) => {
   }
 };
 
-// Update employee details
+
+// update employee details
 module.exports.updateEmployee = async (req, res) => {
   try {
     const employee = await User.findById(req.params.id);
-    const { username, role } = req.body;
+
+    const { name, role } = req.body;
 
     if (!employee) {
       req.flash('error', 'employee does not exist!');
@@ -135,9 +141,9 @@ module.exports.updateEmployee = async (req, res) => {
     }
 
     // update data coming from req.body
-    employee.username = username;
+    employee.name = name;
     employee.role = role;
-    employee.save(); // save the updated data
+    employee.save();
 
     req.flash('success', 'Employee details updated!');
     return res.redirect('back');
@@ -147,10 +153,10 @@ module.exports.updateEmployee = async (req, res) => {
   }
 };
 
-// Add an employee
+// add an employee
 module.exports.createEmployee = async (req, res) => {
   try {
-    const { username, email, password, confirm_password } = req.body;
+    const { name, email, password, confirm_password } = req.body;
 
     // if password doesn't match
     if (password != confirm_password) {
@@ -165,20 +171,20 @@ module.exports.createEmployee = async (req, res) => {
         return;
       }
 
-      // if user not found in db create one
+      // if user not found in database than create user
       if (!user) {
         await User.create(
           {
             email,
             password,
-            username,
+            name,
           },
           (err, user) => {
             if (err) {
               req.flash('error', "Couldn't add employee");
             }
             req.flash('success', 'Employee added!');
-            return res.redirect('back');
+            return res.redirect('/');
           }
         );
       } else {
@@ -192,6 +198,7 @@ module.exports.createEmployee = async (req, res) => {
   }
 };
 
+
 // sign in and create a session for the user
 module.exports.create_section = function(req, res){
     req.flash('success', 'Logged in successfully');
@@ -201,6 +208,7 @@ module.exports.create_section = function(req, res){
     // if user is not admin it will redirect to employee page
     return res.redirect(`/employee-dashboard/${req.user.id}`);
 }
+
 
 // Delete an user
 module.exports.destroy = async (req, res) => {
